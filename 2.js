@@ -3,41 +3,37 @@ const express = require('express');
 const app = express();
 
 
-app.get('/:function/:value', function (req, res) { 
-  switch (req.params.function) {
-    case "decimalToBiner":
-      res.send(decimalToBiner(req.params.value));
-      break;
-    case "binerToDecimal":
-      res.send(binerToDecimal(req.params.value));
-      break;
-  
-    default:
-      res.status(404).send();
-      break;
-  }
+app.get('/palindrom/:value', function (req, res) { 
+  res.send(longestPalindrome(req.params.value));
 })
 
 
 app.listen('8080',() => {console.log('app listen on port 8080')} );
 
-function decimalToBiner(decNum) {
-  let binaryText = '';
-  while (decNum != 0) {
-    binaryText = binaryText.concat((decNum % 2).toString());
-    decNum = parseInt(decNum / 2);
+function longestPalindrome(s) {
+  if (s.length < 1) {
+    return "";
+  } else {
+    s = s.replace(/ /g,"");
+  };
+  let maxSubStart = 0;
+  let maxSubLength = 0;
+  for (let i = 0; i < s.length; i++) {
+    const lengthCenteredAtChar = expandAroundCenter(s, i, i);
+    const lengthCenteredAtSpace = expandAroundCenter(s, i, i + 1);
+    const longestSubAtChar = Math.max(lengthCenteredAtChar, lengthCenteredAtSpace)
+    if (longestSubAtChar > maxSubLength) {
+      maxSubLength = longestSubAtChar;
+      maxSubStart = i - Math.floor((maxSubLength - 1) / 2);
+    }
   }
-  return binaryText.split('').reverse().join('');
+  return s.substr(maxSubStart, maxSubLength);
 }
 
-function binerToDecimal(binNum) {
-  return  binNum.split('').reverse()
-    .map( (val,idx) => ( val * Math.pow(2,idx) ) )
-      .reduce( (acc,curr) => (acc+curr) );
-}
-
-function palindromWord (word) {
-  let clearWord = word.replace(/ /g,"");
-  return ( clearWord === clearWord.split('').reverse().join('') ? "it is palindrom word" : "it isn't palindrom word");
-    
+function expandAroundCenter(s, left, right) {
+  while (left >= 0 && right < s.length && s[left] === s[right]) {
+    left--;
+    right++;
+  }
+  return right - left - 1;
 }
