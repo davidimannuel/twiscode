@@ -1,12 +1,12 @@
+const { response } = require('express');
 const express = require('express');
 
 const app = express();
 
 
 app.get('/binerToDecimal/:value', function (req, res) { 
- let result = binerToDecimal(req.params.value);
- console.log(result);
- res.send('hello');
+  let response = binerToDecimal(req.params.value)
+  res.json(response);
 })
 
 
