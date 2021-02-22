@@ -4,7 +4,7 @@ const app = express();
 
 
 app.get('/decimalToBiner/:value', function (req, res) { 
-  res.send(req.params.value);
+  res.send(decimalToBiner(req.params.value));
 })
 
 

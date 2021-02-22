@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "2": "nodemon 2",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index",
-    "1a" : "nodemon 1a",
-    "1b" : "nodemon 1b",
-    "2" : "nodemon 2"
+    "1a": "nodemon 1a",
+    "1b": "nodemon 1b"
   },
   "author": "",
   "license": "ISC",
